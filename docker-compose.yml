@@ -1,0 +1,49 @@
+zookeeper:
+  image: jplock/zookeeper
+  hostname: zookeeper
+  expose:
+   - 2181
+   - 2888 
+   - 3888
+master:
+  build: .
+  hostname: master
+  ports:
+   - 8888:5050
+  expose:
+   - 5050
+  links:
+   - zookeeper:zookeeper
+  command: ./bin/mesos-master.sh --zk=zk://zookeeper:2181/mesos --ip=0.0.0.0 --work_dir=/var/lib/mesos --quorum=1
+marathon:
+  build: .
+  hostname: marathon
+  ports:
+   - 8080:8080
+  links:
+   - master:master
+   - zookeeper:zookeeper
+  environment:
+   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.22.1/build/src/.libs/libmesos.so
+  command: /marathon-0.8.2/bin/start --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon
+node1:
+  build: .
+  hostname: node1
+  links:
+   - master:master
+  volumes:
+   - /var/run/docker.sock:/run/docker.sock   
+   - /usr/bin/docker:/bin/docker
+   - /sys:/sys
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos
+  privileged: true
+node2:
+  build: .
+  hostname: node2
+  links:
+   - master:master
+  volumes:
+   - /var/run/docker.sock:/run/docker.sock   
+   - /usr/bin/docker:/bin/docker
+   - /sys:/sys
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos
