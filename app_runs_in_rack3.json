@@ -1,0 +1,8 @@
+{
+  "id": "sleeper",
+  "cmd": "/bin/sleep 120",
+  "cpus": 0.5,
+  "mem": 32.0,
+  "instances": 10,
+  "constraints": [["rack", "CLUSTER", "rack3"]]
+}

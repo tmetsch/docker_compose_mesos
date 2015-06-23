@@ -35,7 +35,7 @@ node1:
    - /var/run/docker.sock:/run/docker.sock   
    - /usr/bin/docker:/bin/docker
    - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack1;gpu:true
   privileged: true
 node2:
   build: .
@@ -43,7 +43,15 @@ node2:
   links:
    - master:master
   volumes:
-   - /var/run/docker.sock:/run/docker.sock   
-   - /usr/bin/docker:/bin/docker
    - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2 --docker=/usr/local/bin/docky
+  privileged: true
+node3:
+  build: .
+  hostname: node3
+  links:
+   - master:master
+  volumes:
+   - /sys:/sys
+  command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3
+  privileged: true

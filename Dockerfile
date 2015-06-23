@@ -13,6 +13,9 @@ RUN apt-get install -y autoconf libtool
 RUN apt-get -y install build-essential python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev wget
 
 RUN wget -qO- https://get.docker.com/ | sh
+
+ADD ./docky /usr/local/bin/docky
+RUN chmod +x /usr/local/bin/docky
     
 RUN wget http://www.apache.org/dist/mesos/0.22.1/mesos-0.22.1.tar.gz
 RUN tar -zxf mesos-0.22.1.tar.gz

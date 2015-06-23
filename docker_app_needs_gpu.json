@@ -1,12 +1,15 @@
 {
-  "id": "basic-3",
+  "id": "python-web",
   "cmd": "python3 -m http.server 8080",
   "cpus": 0.5,
   "mem": 32.0,
+  "instances": 4,
+  "constraints": [["gpu", "CLUSTER", "true"]],
   "container": {
     "type": "DOCKER",
     "docker": {
       "image": "python:3",
+      "forcePullImage": true,
       "network": "BRIDGE",
       "portMappings": [
         { "containerPort": 8080, "hostPort": 0 }
