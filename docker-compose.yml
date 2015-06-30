@@ -37,6 +37,8 @@ node1:
    - /sys:/sys
   command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack1;gpu:true
   privileged: true
+  cpu_shares: 256
+  mem_limit: 1G
 node2:
   build: .
   hostname: node2
@@ -44,8 +46,10 @@ node2:
    - master:master
   volumes:
    - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2 --docker=/usr/local/bin/docky --executor_registration_timeout=10mins
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2;turtles:true --docker=/usr/local/bin/docky --executor_registration_timeout=10mins
   privileged: true
+  cpu_shares: 256
+  mem_limit: 1G
 node3:
   build: .
   hostname: node3
@@ -55,3 +59,5 @@ node3:
    - /sys:/sys
   command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3
   privileged: true
+  cpu_shares: 256
+  mem_limit: 1G

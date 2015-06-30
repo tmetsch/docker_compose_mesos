@@ -4,7 +4,7 @@
   "cpus": 0.5,
   "mem": 32.0,
   "instances": 4,
-  "constraints": [["rack", "CLUSTER", "rack2"]],
+  "constraints": [["turtles", "CLUSTER", "true"]],
   "container": {
     "type": "DOCKER",
     "docker": {
