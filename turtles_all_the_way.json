@@ -1,0 +1,19 @@
+{
+  "id": "turle",
+  "cmd": "echo 'hello'",
+  "cpus": 0.5,
+  "mem": 32.0,
+  "instances": 4,
+  "constraints": [["rack", "CLUSTER", "rack2"]],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "busybox",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [
+        { "containerPort": 8080, "hostPort": 0 }
+      ]
+    }
+  }
+}
