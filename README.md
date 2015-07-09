@@ -16,7 +16,7 @@ By running the following command a small [Apache Mesos](http://mesos.apache.org/
     devopsmesos_node3_1       ./bin/mesos-slave.sh --mas ...   Up                                   
     devopsmesos_zookeeper_1   /opt/zookeeper-3.4.5/bin/z ...   Up      2181/tcp, 2888/tcp, 3888/tcp
     
-The Mesos UI can be found [here](http://localhost:8888).
+The Mesos UI can be found [here](http://localhost:5050).
 
 The Marathon UI can be found [here](http://localhost:8080).
 
@@ -33,6 +33,16 @@ You can lookup the exposed port of the app on your host machine's docker and vis
     e1afec4c53ba        python:3                  "/bin/sh -c 'python3   14 minutes ago      Up 14 minutes       0.0.0.0:31000->8080/tcp        mesos-f258fe56-d68c-42f2-878c-b8c88186087b  
     151f8c8904f8        devopsmesos_marathon      "/marathon-0.8.2/bin   15 minutes ago      Up 15 minutes       0.0.0.0:8080->8080/tcp         devopsmesos_marathon_1 
     [...]
+
+## Using dcos-cli
+
+The [dcos-cli](https://github.com/mesosphere/dcos-cli) can be used with this setup too:
+
+ $ dcos config set core.mesos_master_url http://localhost:5050
+ $ dcos config set marathon.url http://localhost:8080
+ $ dcos service                                               
+ NAME        HOST    ACTIVE  TASKS  CPU  MEM  DISK  ID                                    
+ marathon  marathon   True     24    12  768   0    20150630-143319-603984300-5050-1-0000 
 
 ## Acks
 
