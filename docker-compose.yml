@@ -6,17 +6,19 @@ zookeeper:
    - 2888 
    - 3888
 master:
-  build: .
+  extends:
+    file: common.yml
+    service: mesos_marathon
   hostname: master
   ports:
    - 5050:5050
-  expose:
-   - 5050
   links:
    - zookeeper:zookeeper
   command: ./bin/mesos-master.sh --zk=zk://zookeeper:2181/mesos --ip=0.0.0.0 --work_dir=/var/lib/mesos --quorum=1
 marathon:
-  build: .
+  extends:
+    file: common.yml
+    service: mesos_marathon
   hostname: marathon
   ports:
    - 8080:8080
@@ -24,11 +26,12 @@ marathon:
    - master:master
    - zookeeper:zookeeper
   environment:
-   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.22.1/build/src/.libs/libmesos.so
-  command: /marathon-0.8.2/bin/start --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon --max_tasks_per_offer 10
+   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.23.0/build/src/.libs/libmesos.so
+  command: /marathon-0.9.0/bin/start --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon --max_tasks_per_offer 10
 node1:
-  build: .
-  hostname: node1
+  extends:
+    file: common.yml
+    service: mesos_marathon
   links:
    - master:master
   volumes:
@@ -40,8 +43,9 @@ node1:
   cpu_shares: 256
   mem_limit: 1G
 node2:
-  build: .
-  hostname: node2
+  extends:
+    file: common.yml
+    service: mesos_marathon
   links:
    - master:master
   volumes:
@@ -51,8 +55,9 @@ node2:
   cpu_shares: 256
   mem_limit: 1G
 node3:
-  build: .
-  hostname: node3
+  extends:
+    file: common.yml
+    service: mesos_marathon
   links:
    - master:master
   volumes:

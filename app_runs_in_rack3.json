@@ -1,9 +1,10 @@
 {
-  "id": "sleeper2",
+  "id": "sleeper",
   "cmd": "/bin/sleep 30",
   "cpus": 0.5,
   "mem": 32.0,
   "instances": 100,
   "maxLaunchDelaySeconds": 10,
-  "tasksRunning": 100
+  "tasksRunning": 10,
+  "constraints": [["rack", "CLUSTER", "rack3"]]
 }
