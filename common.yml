@@ -1,0 +1,2 @@
+mesos_marathon:
+  build: .
