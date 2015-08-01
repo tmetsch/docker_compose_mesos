@@ -38,11 +38,11 @@ You can lookup the exposed port of the app on your host machine's docker and vis
 
 The [dcos-cli](https://github.com/mesosphere/dcos-cli) can be used with this setup too:
 
- $ dcos config set core.mesos_master_url http://localhost:5050
- $ dcos config set marathon.url http://localhost:8080
- $ dcos service                                               
- NAME        HOST    ACTIVE  TASKS  CPU  MEM  DISK  ID                                    
- marathon  marathon   True     24    12  768   0    20150630-143319-603984300-5050-1-0000 
+    $ dcos config set core.mesos_master_url http://localhost:5050
+    $ dcos config set marathon.url http://localhost:8080
+    $ dcos service                                               
+    NAME        HOST    ACTIVE  TASKS  CPU  MEM  DISK  ID                                    
+    marathon  marathon   True     24    12  768   0    20150630-143319-603984300-5050-1-0000 
 
 ## Acks
 
