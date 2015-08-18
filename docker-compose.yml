@@ -66,3 +66,4 @@ node3:
   privileged: true
   cpu_shares: 256
   mem_limit: 1G
+

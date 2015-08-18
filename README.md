@@ -24,7 +24,7 @@ The Marathon UI can be found [here](http://localhost:8080).
 
 To run a simple app registerd the app:
 
-    $ curl -X POST http://localhost:8080/v2/apps -d @docker_app_needs_gpu.json -H "Content-type: application/json"
+    $ curl -X POST http://localhost:8080/v2/apps -d @examples/docker_app_needs_gpu.json -H "Content-type: application/json"
 
 You can lookup the exposed port of the app on your host machine's docker and visit the expose "web interface" afterwards:
 
