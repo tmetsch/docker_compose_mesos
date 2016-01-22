@@ -17,14 +17,14 @@ RUN wget -qO- https://get.docker.com/ | sh
 ADD ./docky /usr/local/bin/docky
 RUN chmod +x /usr/local/bin/docky
     
-RUN wget http://www.apache.org/dist/mesos/0.25.0/mesos-0.25.0.tar.gz
-RUN tar -zxf mesos-0.25.0.tar.gz
+RUN wget http://www.apache.org/dist/mesos/0.26.0/mesos-0.26.0.tar.gz
+RUN tar -zxf mesos-0.26.0.tar.gz
 
-RUN wget http://downloads.mesosphere.com/marathon/v0.11.1/marathon-0.11.1.tgz
-RUN tar -xzf marathon-0.11.1.tgz
+RUN wget http://downloads.mesosphere.com/marathon/v0.14.0/marathon-0.14.0.tgz
+RUN tar -xzf marathon-0.14.0.tgz
 
-RUN mkdir -p mesos-0.25.0/build
+RUN mkdir -p mesos-0.26.0/build
 
-WORKDIR mesos-0.25.0/build
-RUN /mesos-0.25.0/configure
+WORKDIR mesos-0.26.0/build
+RUN /mesos-0.26.0/configure
 RUN make -j 2

@@ -26,8 +26,8 @@ marathon:
    - master:master
    - zookeeper:zookeeper
   environment:
-   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.25.0/build/src/.libs/libmesos.so
-  command: /marathon-0.11.1/bin/start --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon --max_tasks_per_offer 10
+   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.26.0/build/src/.libs/libmesos.so
+  command: /marathon-0.14.0/bin/start --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon --max_tasks_per_offer 10
 node1:
   extends:
     file: common.yml
@@ -35,35 +35,35 @@ node1:
   links:
    - master:master
   volumes:
-   - /var/run/docker.sock:/run/docker.sock   
-   - /usr/bin/docker:/bin/docker
-   - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack1;gpu:true --resources=ports(*):[20000-32000]
+    - /sys/fs/cgroup:/sys/fs/cgroup
+    - /usr/bin/docker:/usr/bin/docker
+    - /var/run/docker.sock:/var/run/docker.sock
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker --attributes=rack:rack1;gpu:true --resources=ports(*):[20000-32000] --executor_registration_timeout=10mins
   privileged: true
   cpu_shares: 256
   mem_limit: 1G
-node2:
-  extends:
-    file: common.yml
-    service: mesos_marathon
-  links:
-   - master:master
-  volumes:
-   - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2;turtles:true --docker=/usr/local/bin/docky --executor_registration_timeout=10mins
-  privileged: true
-  cpu_shares: 256
-  mem_limit: 1G
-node3:
-  extends:
-    file: common.yml
-    service: mesos_marathon
-  links:
-   - master:master
-  volumes:
-   - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3
-  privileged: true
-  cpu_shares: 256
-  mem_limit: 1G
+#node2:
+#  extends:
+#    file: common.yml
+#    service: mesos_marathon
+#  links:
+#   - master:master
+#  volumes:
+#   - /sys:/sys
+#  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2;turtles:true --docker=/usr/local/bin/docky --executor_registration_timeout=10mins
+#  privileged: true
+#  cpu_shares: 256
+#  mem_limit: 1G
+#node3:
+#  extends:
+#    file: common.yml
+#    service: mesos_marathon
+#  links:
+#   - master:master
+#  volumes:
+#   - /sys:/sys
+#  command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3
+#  privileged: true
+#  cpu_shares: 256
+#  mem_limit: 1G
 
