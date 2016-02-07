@@ -42,28 +42,28 @@ node1:
   privileged: true
   cpu_shares: 256
   mem_limit: 1G
-#node2:
-#  extends:
-#    file: common.yml
-#    service: mesos_marathon
-#  links:
-#   - master:master
-#  volumes:
-#   - /sys:/sys
-#  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2;turtles:true --docker=/usr/local/bin/docky --executor_registration_timeout=10mins
-#  privileged: true
-#  cpu_shares: 256
-#  mem_limit: 1G
-#node3:
-#  extends:
-#    file: common.yml
-#    service: mesos_marathon
-#  links:
-#   - master:master
-#  volumes:
-#   - /sys:/sys
-#  command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3
-#  privileged: true
-#  cpu_shares: 256
-#  mem_limit: 1G
+node2:
+  extends:
+    file: common.yml
+    service: mesos_marathon
+  links:
+   - master:master
+  volumes:
+   - /sys:/sys
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2;turtles:true --docker=/usr/local/bin/docky --executor_registration_timeout=10mins --launcher=posix
+  privileged: true
+  cpu_shares: 256
+  mem_limit: 1G
+node3:
+  extends:
+    file: common.yml
+    service: mesos_marathon
+  links:
+   - master:master
+  volumes:
+   - /sys:/sys
+  command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3 --launcher=posix
+  privileged: true
+  cpu_shares: 256
+  mem_limit: 1G
 
