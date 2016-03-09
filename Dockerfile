@@ -1,4 +1,4 @@
-FROM ubuntu:15.04
+FROM ubuntu:15.10
 
 # Update the packages.
 RUN apt-get update --fix-missing
@@ -14,17 +14,19 @@ RUN apt-get -y install build-essential python-dev python-boto libcurl4-nss-dev l
 
 RUN wget -qO- https://get.docker.com/ | sh
 
+RUN update-ca-certificates -f && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 ADD ./docky /usr/local/bin/docky
 RUN chmod +x /usr/local/bin/docky
     
-RUN wget http://www.apache.org/dist/mesos/0.27.0/mesos-0.27.0.tar.gz
-RUN tar -zxf mesos-0.27.0.tar.gz
+RUN wget http://www.apache.org/dist/mesos/0.27.2/mesos-0.27.2.tar.gz
+RUN tar -zxf mesos-0.27.2.tar.gz
 
-RUN wget http://downloads.mesosphere.com/marathon/v0.15.0/marathon-0.15.0.tgz
-RUN tar -xzf marathon-0.15.0.tgz
+RUN wget http://downloads.mesosphere.com/marathon/v0.15.2/marathon-0.15.2.tgz
+RUN tar -xzf marathon-0.15.2.tgz
 
-RUN mkdir -p mesos-0.27.0/build
+RUN mkdir -p mesos-0.27.2/build
 
-WORKDIR mesos-0.27.0/build
-RUN /mesos-0.27.0/configure
+WORKDIR mesos-0.27.2/build
+RUN /mesos-0.27.2/configure
 RUN make -j 2
