@@ -1,13 +1,13 @@
-FROM ubuntu:15.10
+FROM ubuntu
 
 # Update the packages.
 RUN apt-get update --fix-missing
 
 # Install the latest OpenJDK.
-RUN apt-get install -y openjdk-8-jdk
+RUN apt-get install --no-install-recommends -y openjdk-8-jdk
 
 # Install autotools (Only necessary if building from git repository).
-RUN apt-get install -y autoconf libtool
+RUN apt-get install --no-install-recommends -y autoconf libtool
 
 # Install other Mesos dependencies.
 RUN apt-get -y install build-essential python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev libz-dev wget
@@ -19,14 +19,14 @@ RUN update-ca-certificates -f && apt-get clean && rm -rf /var/lib/apt/lists/*
 ADD ./docky /usr/local/bin/docky
 RUN chmod +x /usr/local/bin/docky
     
-RUN wget http://www.apache.org/dist/mesos/0.27.2/mesos-0.27.2.tar.gz
-RUN tar -zxf mesos-0.27.2.tar.gz
+RUN wget http://www.apache.org/dist/mesos/0.28.1/mesos-0.28.1.tar.gz
+RUN tar -zxf mesos-0.28.1.tar.gz
 
-RUN wget http://downloads.mesosphere.com/marathon/v0.15.2/marathon-0.15.2.tgz
-RUN tar -xzf marathon-0.15.2.tgz
+RUN wget http://downloads.mesosphere.com/marathon/v1.1.1/marathon-1.1.1.tgz
+RUN tar -xzf marathon-1.1.1.tgz
 
-RUN mkdir -p mesos-0.27.2/build
+RUN mkdir -p mesos-0.28.1/build
 
-WORKDIR mesos-0.27.2/build
-RUN /mesos-0.27.2/configure
+WORKDIR mesos-0.28.1/build
+RUN /mesos-0.28.1/configure
 RUN make -j 2
