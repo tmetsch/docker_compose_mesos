@@ -26,7 +26,7 @@ marathon:
    - master:master
    - zookeeper:zookeeper
   environment:
-   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.28.1/build/src/.libs/libmesos.so
+   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.28.2/build/src/.libs/libmesos.so
   command: /marathon-1.1.1/bin/start --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon --max_tasks_per_offer 10
 node1:
   extends:
@@ -38,7 +38,7 @@ node1:
     - /sys/fs/cgroup:/sys/fs/cgroup
     - /usr/bin/docker:/usr/bin/docker
     - /var/run/docker.sock:/var/run/docker.sock
-  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker --attributes=rack:rack1;gpu:true --resources=ports(*):[20000-32000] --executor_registration_timeout=10mins
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker --attributes=rack:rack1;gpu:true --resources=ports(*):[20000-32000] --executor_registration_timeout=10mins  --no-systemd_enable_support 
   privileged: true
   cpu_shares: 256
   mem_limit: 1G
@@ -50,7 +50,7 @@ node2:
    - master:master
   volumes:
    - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2;turtles:true --docker=/usr/local/bin/docky --executor_registration_timeout=10mins --launcher=posix
+  command: ./bin/mesos-slave.sh --master=master:5050 --containerizers=docker,mesos --attributes=rack:rack2;turtles:true --docker=/usr/local/bin/docky --executor_registration_timeout=10mins --no-systemd_enable_support --launcher=posix
   privileged: true
   cpu_shares: 256
   mem_limit: 1G
@@ -62,7 +62,7 @@ node3:
    - master:master
   volumes:
    - /sys:/sys
-  command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3 --launcher=posix
+  command: ./bin/mesos-slave.sh --master=master:5050 --attributes=rack:rack3 --no-systemd_enable_support --launcher=posix
   privileged: true
   cpu_shares: 256
   mem_limit: 1G
