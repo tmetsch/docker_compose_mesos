@@ -25,8 +25,6 @@ marathon:
   links:
    - master:master
    - zookeeper:zookeeper
-  environment:
-   - MESOS_NATIVE_JAVA_LIBRARY=/mesos-0.28.2/build/src/.libs/libmesos.so
   command: /marathon-1.1.1/bin/start --master zk://zookeeper:2181/mesos --zk zk://zookeeper:2181/marathon --max_tasks_per_offer 10
 node1:
   extends:

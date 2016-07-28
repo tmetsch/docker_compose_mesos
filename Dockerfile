@@ -19,14 +19,15 @@ RUN update-ca-certificates -f && apt-get clean && rm -rf /var/lib/apt/lists/*
 ADD ./docky /usr/local/bin/docky
 RUN chmod +x /usr/local/bin/docky
     
-RUN wget http://www.apache.org/dist/mesos/0.28.2/mesos-0.28.2.tar.gz
-RUN tar -zxf mesos-0.28.2.tar.gz
+RUN wget http://www.apache.org/dist/mesos/1.0.0/mesos-1.0.0.tar.gz
+RUN tar -zxf mesos-1.0.0.tar.gz
 
 RUN wget http://downloads.mesosphere.com/marathon/v1.1.1/marathon-1.1.1.tgz
 RUN tar -xzf marathon-1.1.1.tgz
 
-RUN mkdir -p mesos-0.28.2/build
+RUN mkdir -p mesos-1.0.0/build
 
-WORKDIR mesos-0.28.2/build
-RUN /mesos-0.28.2/configure
+WORKDIR mesos-1.0.0/build
+RUN /mesos-1.0.0/configure
 RUN make -j 2
+RUN make install
