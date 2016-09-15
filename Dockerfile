@@ -1,33 +1,23 @@
 FROM ubuntu
 
-# Update the packages.
+COPY mesos.tgz /mesos.tgz
+
+COPY ./docky /usr/local/bin/docky
+RUN chmod +x /usr/local/bin/docky
+
+RUN tar -zxvf mesos.tgz
 RUN apt-get update --fix-missing
-
-# Install the latest OpenJDK.
-RUN apt-get install --no-install-recommends -y openjdk-8-jdk
-
-# Install autotools (Only necessary if building from git repository).
-RUN apt-get install --no-install-recommends -y autoconf libtool
-
-# Install other Mesos dependencies.
-RUN apt-get -y install build-essential python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev libz-dev wget
+RUN apt-get install --no-install-recommends -y libsvn1 libcurl3-nss wget openjdk-8-jre-headless
 
 RUN wget -qO- https://get.docker.com/ | sh
 
-RUN update-ca-certificates -f && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ADD ./docky /usr/local/bin/docky
-RUN chmod +x /usr/local/bin/docky
-    
-RUN wget http://www.apache.org/dist/mesos/1.0.0/mesos-1.0.0.tar.gz
-RUN tar -zxf mesos-1.0.0.tar.gz
+RUN mkdir -p /opt/marathon
+WORKDIR /opt/marathon
+RUN wget http://downloads.mesosphere.com/marathon/v1.3.0/marathon-1.3.0.tgz
+RUN tar -xzf marathon-1.3.0.tgz && cd marathon-1.3.0 && mv * ..
 
-RUN wget http://downloads.mesosphere.com/marathon/v1.1.1/marathon-1.1.1.tgz
-RUN tar -xzf marathon-1.1.1.tgz
+EXPOSE 5050
+WORKDIR /
 
-RUN mkdir -p mesos-1.0.0/build
-
-WORKDIR mesos-1.0.0/build
-RUN /mesos-1.0.0/configure
-RUN make -j 2
-RUN make install

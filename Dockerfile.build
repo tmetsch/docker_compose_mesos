@@ -1,0 +1,27 @@
+FROM ubuntu
+
+# Update the packages.
+RUN apt-get update
+
+# Install the latest OpenJDK.
+RUN apt-get install --no-install-recommends -y openjdk-8-jdk
+
+# Install autotools (Only necessary if building from git repository).
+RUN apt-get install --no-install-recommends -y autoconf libtool
+
+# Install other Mesos dependencies.
+RUN apt-get -y install build-essential python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev libz-dev wget
+
+RUN update-ca-certificates -f 
+    
+RUN wget http://www.apache.org/dist/mesos/1.0.1/mesos-1.0.1.tar.gz
+RUN tar -zxf mesos-1.0.1.tar.gz
+
+RUN mkdir -p mesos-1.0.1/build
+
+WORKDIR mesos-1.0.1/build
+RUN /mesos-1.0.1/configure
+RUN make -j 4
+RUN make DESTDIR=/mesos-1.0.1/build/install install
+RUN tar -C install -zcvf /tmp/mesos.tgz .
+

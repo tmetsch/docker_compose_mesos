@@ -1,2 +1,2 @@
 mesos_marathon:
-  build: .
+  image: tmetsch/mesos_docker

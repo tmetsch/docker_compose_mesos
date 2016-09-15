@@ -5,6 +5,7 @@
 
 By running the following command a small [Apache Mesos](http://mesos.apache.org/) environment is launched. The Marathon Framework and a simple Zookeeper are included. For demo purposes 3 Mesos slaves (all in different racks and some different attributes to play with [constraints](https://github.com/mesosphere/marathon/blob/master/docs/docs/constraints.md)) are used: one connected back to the host's docker environment, one with the #TurlesAllTheWayDown approach, and one using the default non-dockerized excutors. This ensure that there are no conflicting ports as well as easy access to demo apps.
 
+    $ ./build.sh  # optionally
     $ docker-compose up
     $ docker-compose ps
              Name                        Command               State              Ports             
