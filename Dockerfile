@@ -15,8 +15,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt/marathon
 WORKDIR /opt/marathon
-RUN wget http://downloads.mesosphere.com/marathon/v1.3.0/marathon-1.3.0.tgz
-RUN tar -xzf marathon-1.3.0.tgz && cd marathon-1.3.0 && mv * ..
+RUN wget http://downloads.mesosphere.com/marathon/v1.4.3/marathon-1.4.3.tgz
+RUN tar -xzf marathon-1.4.3.tgz && cd marathon-1.4.3 && mv * ..
 
 EXPOSE 5050
 WORKDIR /

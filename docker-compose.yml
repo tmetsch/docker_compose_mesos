@@ -53,7 +53,7 @@ node1:
    - MESOS_RESOURCES=ports(*):[20000-32000]
    - MESOS_EXECUTOR_REGISTRATION_TIMEOUT=10mins
    - MESOS_WORK_DIR=/tmp/mesos
-   - MESOS_NO-SYSTEMD_ENABLE_SUPPORT
+   - MESOS_SYSTEMD_ENABLE_SUPPORT=false
   command: /usr/local/sbin/mesos-slave 
   privileged: true
   cpu_shares: 256
@@ -72,7 +72,7 @@ node2:
    - MESOS_EXECUTOR_REGISTRATION_TIMEOUT=10mins
    - MESOS_LAUNCHER=posix
    - MESOS_WORK_DIR=/tmp/mesos
-   - MESOS_NO-SYSTEMD_ENABLE_SUPPORT
+   - MESOS_SYSTEMD_ENABLE_SUPPORT=false
   command: ./usr/local/sbin/mesos-slave
   privileged: true
   cpu_shares: 256
@@ -90,7 +90,7 @@ node3:
    - MESOS_ATTRIBUTES=rack:rack3
    - MESOS_LAUNCHER=posix
    - MESOS_WORK_DIR=/tmp/mesos
-   - MESOS_NO-SYSTEMD_ENABLE_SUPPORT
+   - MESOS_SYSTEMD_ENABLE_SUPPORT=false
   command: /usr/local/sbin/mesos-slave
   privileged: true
   cpu_shares: 256
